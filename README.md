@@ -35,8 +35,8 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 -   Esta tabla guarda los pagos y su cantidad.
 -   Atributos: IdPago, FechaPago, CantidadPago, IdCliente.
 5.  **Reservas:**
--   Esta tabla guarda las reservas de las canchas indicando qué cancha, qué cliente, la hora de la reserva y cuanto dura esa reserva. La columna EstadoReserva indica el estado de la reserva (confirmada o no confirmada).
--   Atributos: IdReserva, FechaReserva, DescripcionReserva, DuracionReserva, ClienteReserva, CanchaReserva, EstadoReserva, IdEmpleado, Pagada, IdPago.
+-   Esta tabla guarda las reservas de las canchas indicando qué cancha, qué cliente, la hora de la reserva y el empleado que gestionó la reserva.
+-   Atributos: IdReserva, FechaReserva, IdCliente, IdCancha, IdHorario, IdEmpleado.
 -   Contenedores: Implementaré Docker para asegurar un entorno de desarrollo y producción estandarizado, facilitando la gestión de la base de datos y sus dependencias.
 6.  **Horarios:**
 -   Esta tabla guarda los intervalos de tiempo disponibles para las reservas de las canchas.
@@ -67,17 +67,21 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 +--------------------+        +-----------------------+        +------------------+
 | IdCliente (PK)     |<>-----o| IdReserva (PK)        |o-------| IdCancha (PK)    |
 | NombreCliente      |        | FechaReserva          |        | DescripcionCancha|
-| ApellidoCliente    |        | DescripcionReserva    |        | CostoHora        |
-| TelefonoCliente    |        | DuracionReserva       |        | Disponibilidad   |
-+--------------------+        | ClienteReserva (FK)   |        +------------------+
-                              | CanchaReserva (FK)    |
-                              | EstadoReserva         |
-                              | IdEmpleado (FK)       |
-                              | Pagada                |
-                              +-----------------------+
-                                        o
+| ApellidoCliente    |        | IdCliente (FK)        |        | CostoHora        |
+| TelefonoCliente    |        | IdCancha (FK)         |        +------------------+
+| IdCategoria (FK)   |        | IdHorario (FK)        |
++--------------------+        | IdEmpleado (FK)       |
+         ^                    +-----------------------+
+         |                              ^
+         |                              |
+         |                              |
++------------------+                    |
+|    CATEGORIAS    |                    |
++------------------+                    |
+| IdCategoria (PK) |                    |
+| DescripcionCat.  |                    |
++------------------+                    |
                                         |
-                                        v
 +------------------+                    |
 |    EMPLEADOS     |                    |
 +------------------+                    |
@@ -86,15 +90,30 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 | RolEmpleado      |                    |
 +------------------+                    |
                                         |
-                                        |
-                                        |
++------------------+        +-----------------------+
+|     HORARIOS     |        |    RESERVAS_INSUMOS   |
++------------------+        +-----------------------+
+| IdHorario (PK)   |<>------| IdReserva (PK,FK)     |
+| HoraInicio       |        | IdInsumo (PK,FK)      |
+| HoraFin          |        +-----------------------+
++------------------+                    ^
                                         |
 +------------------+                    |
-|      PAGOS       |                    |
-+------------------+                    |
-| IdPago (PK)      |<>------------------+
-| FechaPago        |
-| CantidadPago     |
-| IdCliente (FK)   |
-| IdEmpleado (FK)  |
+|      PAGOS       |             +------------------+
++------------------+             |      INSUMOS     |
+| IdPago (PK)      |             +------------------+
+| FechaPago        |             | IdInsumo (PK)    |
+| CantidadPago     |             | DescripcionInsumo|
+| IdCliente (FK)   |             | Cantidad         |
++------------------+             +------------------+
+         ^
+         |
+         |
++------------------+
+|  DETALLE_PAGOS   |
++------------------+
+| IdDetallePago(PK)|
+| IdPago (FK)      |
+| Descripcion      |
+| Monto            |
 +------------------+
