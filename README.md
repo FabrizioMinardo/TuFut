@@ -38,6 +38,21 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 -   Esta tabla guarda las reservas de las canchas indicando qué cancha, qué cliente, la hora de la reserva y cuanto dura esa reserva. La columna EstadoReserva indica el estado de la reserva (confirmada o no confirmada).
 -   Atributos: IdReserva, FechaReserva, DescripcionReserva, DuracionReserva, ClienteReserva, CanchaReserva, EstadoReserva, IdEmpleado, Pagada, IdPago.
 -   Contenedores: Implementaré Docker para asegurar un entorno de desarrollo y producción estandarizado, facilitando la gestión de la base de datos y sus dependencias.
+6.  **Horarios:**
+-   Esta tabla guarda los intervalos de tiempo disponibles para las reservas de las canchas.
+-   Atributos: IdHorario, HoraInicio, HoraFin.
+7.  **Insumos:**
+-   Esta tabla guarda los insumos que pueden ser utilizados durante las reservas, como pelotas, redes, etc.
+-   Atributos: IdInsumo, DescripcionInsumo, Cantidad.
+8.  **Categorias:**
+-   Esta tabla guarda los tipos de clientes según su frecuencia de reservas.
+-   Atributos: IdCategoria, DescripcionCategoria.
+9.  **Detalle_Pagos:**
+-   En esta tabla se guardan los detalles de los pagos, asociando cada pago con las reservas correspondientes.
+-   Atributos: IdDetallePago, IdPago, Descripcion, Monto.
+10. **Reservas_Insumos:**
+-   Esta tabla guarda la relación entre las reservas y los insumos utilizados en cada reserva.
+-   Atributos: IdReserva, IdInsumo.
 # Resultados:
 -   Las reservas serán registradas de manera correcta y precisa, reduciendo significativamente los errores de duplicación o falta de registro.
 -   El proceso de reserva será más ágil y eficiente, gracias a la automatización y optimización de los flujos de trabajo.

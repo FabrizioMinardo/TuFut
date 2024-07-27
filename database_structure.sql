@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `CANCHAS`;
 CREATE TABLE `CANCHAS` (
   `IdCancha` int NOT NULL AUTO_INCREMENT,
   `DescripcionCancha` varchar(60) DEFAULT NULL,
-  `CostoHora` int DEFAULT NULL,
+  `CostoHora` int,
   PRIMARY KEY (`IdCancha`)
 ) COMMENT='En esta tabla se guarda el id de cada cancha y la descripcion, que en este caso es su ubicacion dentro del club';
 
@@ -46,7 +46,7 @@ CREATE TABLE `CLIENTES` (
   `NombreCliente` varchar(60) DEFAULT NULL,
   `ApellidoCliente` varchar(60) DEFAULT NULL,
   `TelefonoCliente` varchar(80) NOT NULL,
-  `IdCategoria` int DEFAULT NULL,
+  `IdCategoria` int,
   PRIMARY KEY (`IdCliente`),
   KEY `fk_clientes_categorias` (`IdCategoria`),
   CONSTRAINT `fk_clientes_categorias` FOREIGN KEY (`IdCategoria`) REFERENCES `CATEGORIAS` (`IdCategoria`)
@@ -58,7 +58,7 @@ CREATE TABLE `PAGOS` (
   `IdPago` int NOT NULL AUTO_INCREMENT,
   `FechaPago` datetime DEFAULT CURRENT_TIMESTAMP,
   `CantidadPago` int DEFAULT NULL,
-  `IdCliente` int DEFAULT NULL,
+  `IdCliente` int,
   PRIMARY KEY (`IdPago`),
   KEY `fk_pagos_clientes` (`IdCliente`),
   CONSTRAINT `fk_pagos_clientes` FOREIGN KEY (`IdCliente`) REFERENCES `CLIENTES` (`IdCliente`)
@@ -72,7 +72,7 @@ CREATE TABLE `RESERVAS` (
   `IdCliente` int NOT NULL,
   `IdCancha` int NOT NULL,
   `IdHorario` int NOT NULL,
-  `IdEmpleado` int DEFAULT NULL,
+  `IdEmpleado` int,
   PRIMARY KEY (`IdReserva`),
   KEY `fk_reservas_clientes` (`IdCliente`),
   KEY `fk_reservas_canchas` (`IdCancha`),
