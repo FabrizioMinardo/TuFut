@@ -115,4 +115,4 @@ CREATE TABLE `RESERVAS_INSUMOS` (
   KEY `fk_reservas_insumos_insumos` (`IdInsumo`),
   CONSTRAINT `fk_reservas_insumos_reservas` FOREIGN KEY (`IdReserva`) REFERENCES `RESERVAS` (`IdReserva`),
   CONSTRAINT `fk_reservas_insumos_insumos` FOREIGN KEY (`IdInsumo`) REFERENCES `INSUMOS` (`IdInsumo`)
-) COMMENT='Esta tabla guarda la relación entre reservas y los insumos utilizados';
+) COMMENT='Esta tabla guarda la relacion entre reservas y los insumos utilizados';
