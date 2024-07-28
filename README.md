@@ -166,7 +166,13 @@ Inserta un nuevo registro en la tabla RESERVAS con los detalles proporcionados.
 -   Utilidad:
 Facilita la creación de nuevas reservas de manera controlada y sistemática, asegurando que toda la información relevante sea registrada adecuadamente.
 
-    *SP_ActualizarPago*
+#### Ejemplo
+
+``` sql 
+CALL SP_RegistrarReserva(1, 2, '2024-07-28', 3, 1);
+```
+
+*SP_ActualizarPago*
 -   Descripción:
 Actualiza la cantidad de un pago existente.
 -   Objetivo:
@@ -179,7 +185,14 @@ Actualiza el campo CantidadPago en la tabla PAGOS para el registro con IdPago ig
 -   Utilidad:
 Permite corregir o actualizar la información de pagos ya registrados, asegurando la exactitud de los registros.
 
-    *SP_EliminarReserva*
+#### Ejemplo
+
+```sql
+CALL SP_ActualizarPago(5, 150);
+```
+
+
+*SP_EliminarReserva*
 -   Descripción:
 Elimina una reserva y sus pagos asociados, verificando primero la categoría del cliente y si la reserva existe.
 -   Objetivo:
@@ -194,3 +207,9 @@ Si la categoría del cliente es "cliente nuevo", lanza un error.
 Si la categoría del cliente no es "cliente nuevo", elimina los detalles del pago, la reserva y los pagos asociados al cliente.
 -   Utilidad:
 Permite la eliminación controlada de reservas y sus pagos asociados, asegurando que solo ciertos tipos de clientes puedan realizar esta acción y manteniendo la integridad referencial de la base de datos.
+
+#### Ejemplo
+
+```sql
+CALL SP_EliminarReserva(19);
+```
