@@ -117,3 +117,33 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 | Descripcion      |
 | Monto            |
 +------------------+
+```
+## Funciones:
+Se elaboraron 3 funciones para la base de datos.
+1.  *DisponibilidadCancha*
+-   Descripción:
+Realiza la comprobación de que si una cancha está disponible o no en una fecha y hora determinada.
+-   Objetivo:
+Consultar si una cancha está disponible.
+-   Valor que retorna:
+BOOLEAN - Retorna TRUE si la cancha está disponible, y FALSE en caso contrario.
+-   Utilidad:
+Permite verificar la disponibilidad de una cancha antes de registrar una nueva reserva, optimizando la gestión de las canchas y evitando conflictos de horarios.
+2.  *CategoriaCliente*
+-   Descripción:
+Clasifica a los clientes en diferentes categorías según la cantidad de reservas que han realizado.
+-   Objetivo:
+Asignar una categoría a cada cliente basado en su historial de reservas.
+-   Valor que retorna:
+VARCHAR(20) - Retorna una cadena con la categoría del cliente, que puede ser 'cliente VIP', 'cliente frecuente', 'cliente nuevo' o 'cliente inactivo'.
+-   Utilidad:
+Facilita la identificación de los clientes según su nivel de actividad, permitiendo implementar estrategias de fidelización y promociones específicas para cada categoría.
+3.  *DetallePago*
+-   Descripción:
+Obtiene los detalles de un pago específico, incluyendo el cliente que realizó el pago, el monto y la fecha del mismo.
+-   Objetivo:
+Proporciona información detallada sobre un pago realizado por un cliente.
+-   Valor que retorna:
+VARCHAR(200) - Retorna una cadena concatenada con los detalles del pago.
+-   Utilidad:
+Permite obtener rápidamente información sobre los pagos realizados, útil para consultas, reportes financieros y para el seguimiento de transacciones.
