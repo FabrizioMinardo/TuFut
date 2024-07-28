@@ -1,89 +1,77 @@
-USE Wifly;
+USE TUFUT;
 
--- Creacion Vistas
--- VISTA PARA ADMINISTRACIÓN: permite ver el modelo del equipo que tiene asignado e instalado c/cliente y el proveedor que lo suministro con la fecha del suministro y de la factura.
-CREATE VIEW view_admin_equipos_adquiridos_fecha AS
+CREATE OR REPLACE VIEW VW_ReservasClientes_Findes AS
 SELECT 
-    c.id_cliente, 
-    c.razon_social AS 'Nombre Cliente',
-    e.id_equipo, 
-    e.marca, 
-    e.modelo,
-    s.id_proveedor,
-    p.razon_social AS 'Nombre Proveedor',
-    s.fecha_de_suministro,
-    f.fecha AS fecha_factura
-FROM CLIENTES c
-JOIN EQUIPOS e ON c.id_equipo = e.id_equipo
-JOIN FACTURAS f ON c.id_cliente = f.id_cliente AND e.id_equipo = (SELECT id_equipo FROM CLIENTES WHERE id_cliente = c.id_cliente)
-JOIN SUMINISTROS s ON e.id_equipo = s.id_equipo
-JOIN PROVEEDORES p ON s.id_proveedor = p.id_proveedor
-WHERE s.fecha_de_suministro = (
-    SELECT s2.fecha_de_suministro
-    FROM SUMINISTROS s2
-    WHERE s2.id_equipo = e.id_equipo
-    ORDER BY ABS(TIMESTAMPDIFF(DAY, s2.fecha_de_suministro, f.fecha))
-    LIMIT 1
-)
-ORDER BY c.id_cliente, e.id_equipo;
+    R.IdReserva,
+    R.FechaReserva AS Fecha,
+    C.NombreCliente AS Nombre,
+    C.ApellidoCliente AS Apellido,
+    R.IdCancha,
+    R.IdHorario AS Hora
+FROM 
+    RESERVAS R
+JOIN 
+    CLIENTES C ON R.IdCliente = C.IdCliente
+WHERE 
+    DAYOFWEEK(R.FechaReserva) IN (1, 7);
 
--- VISTA PARA ADMINISTRACION: permite observar el tipo de abono que tiene contratado cada cliente y el precio.
-CREATE VIEW view_admin_abonos_clientes AS
-(SELECT
-	c.id_cliente,
-	c.razon_social AS 'Nombre Cliente',
-	c.id_abono,
-	a.tipo_de_abono AS 'Tipo de Abono',
-	a.precio_abono
-FROM CLIENTES c
-JOIN ABONOS a ON c.id_abono = a.id_abono);
-
--- VISTA PARA ADMINISTRACIÓN: permite ver las operaciones que se le asignaron a los distintos empleados y su respuesta.
-CREATE VIEW view_admin_operaciones_respuesta AS
-(SELECT
-	o.tipo_operacion,
-	o.fecha_operaciones,
-	CONCAT(e.nombre,' ', e.apellido) AS 'Empleado',
-	o.respuesta
-FROM OPERACIONES o
-JOIN ASIGNACIONES a ON o.id_operacion = a.id_operacion
-JOIN EMPLEADOS e ON a.id_empleado = e.id_empleado);
-
--- VISTA PARA CEO Y ADMINISTRACIÓN: permite visualizar las bajas efectuadas con su fecha y los clientes que la efectuaron.
-CREATE VIEW view_bajas_clientes AS
+CREATE OR REPLACE VIEW VW_PagosDetallados AS
 SELECT 
-    c.id_cliente, 
-    c.razon_social AS 'Nombre Cliente',
-    o.id_operacion, 
-    o.tipo_operacion AS 'Descripcion Operacion',
-    o.fecha_operaciones AS 'Fecha Operacion'
-FROM CLIENTES c
-JOIN OPERACIONES o ON c.id_cliente = o.id_cliente
-WHERE o.tipo_operacion LIKE '%Baja%'
-ORDER BY c.id_cliente, o.fecha_operaciones;
+    P.IdPago,
+    P.FechaPago,
+    P.CantidadPago,
+    C.NombreCliente,
+    C.ApellidoCliente,
+    R.FechaReserva
+FROM 
+    PAGOS P
+JOIN 
+    CLIENTES C ON P.IdCliente = C.IdCliente
+JOIN 
+    RESERVAS R ON C.IdCliente = R.IdCliente
+ORDER BY 
+    P.FechaPago DESC;
 
--- VISTA PARA CEO Y ADMINISTRACIÓN: permite observar los reclamos asentados, y las respuestas efectuadas en los mismos.
-CREATE VIEW view_reclamos_respuesta AS
+
+    CREATE OR REPLACE VIEW VW_ClientesFrecuentes_Pagos AS
 SELECT 
-    o.id_operacion,
-    o.descripcion AS 'Descripción Reclamo',
-    o.respuesta AS 'Respuesta',
-    o.fecha_operaciones AS 'Fecha',
-    c.id_cliente,
-    c.razon_social AS 'Nombre Cliente'
-FROM OPERACIONES o
-JOIN CLIENTES c ON o.id_cliente = c.id_cliente
-WHERE o.tipo_operacion = 'Reclamo'
-ORDER BY o.fecha_operaciones;
+    C.NombreCliente AS Nombre,
+    C.ApellidoCliente AS Apellido,
+    TotalPagos.Total
+FROM 
+    CLIENTES C
+JOIN (
+    SELECT 
+        P.IdCliente,
+        SUM(P.CantidadPago) AS Total
+    FROM 
+        PAGOS P
+    GROUP BY 
+        P.IdCliente
+    HAVING 
+        SUM(P.CantidadPago) > 10000
+) AS TotalPagos ON C.IdCliente = TotalPagos.IdCliente
+WHERE 
+    C.IdCategoria = (SELECT IdCategoria FROM CATEGORIAS WHERE DescripcionCategoria = 'Cliente frecuente');
 
--- VISTA PARA GERENCIA: permite ver en forma concisa la ganancia obtenida por abonos y equipos por cada cliente.
-CREATE VIEW view_gerencia_ganancia AS
-(SELECT
-	v.id_cliente,
-	SUM(v.precio_abono - v.costo_abono) AS 'Ganancia Abonos',
-	SUM(v.precio_equipo - v.costo_equipo) AS 'Ganancia Equipos',
-	c.razon_social
-FROM VENTAS v
-JOIN CLIENTES c ON v.id_cliente = c.id_cliente
-GROUP BY v.id_cliente, c.razon_social
-ORDER BY SUM(v.precio_abono - v.costo_abono) + SUM(v.precio_equipo - v.costo_equipo) DESC);
+
+CREATE OR REPLACE VIEW VW_ReservasHoy AS
+SELECT
+    R.FechaReserva AS Fecha,
+    H.HoraInicio AS Cominezo,
+    H.HoraFin AS Fin,
+    C.NombreCliente AS Nombre,
+    C.ApellidoCliente AS Apellido,
+    CA.DescripcionCancha AS NombreCancha
+FROM
+    RESERVAS R
+JOIN
+    CLIENTES C ON R.IdCliente = C.IdCliente
+JOIN
+    HORARIOS H ON R.IdHorario = H.IdHorario
+JOIN
+    CANCHAS CA ON R.IdCancha = CA.IdCancha
+WHERE
+    DATE(R.FechaReserva) = CURDATE()
+ORDER BY
+    H.HoraInicio;
