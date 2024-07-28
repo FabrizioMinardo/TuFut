@@ -213,3 +213,45 @@ Permite la eliminación controlada de reservas y sus pagos asociados, asegurando
 ```sql
 CALL SP_EliminarReserva(19);
 ```
+## Vistas:
+En el proyecto del sistema de reservas y pagos del club, se han diseñado varias vistas para diferentes áreas y con distintos objetivos. A continuación, se detallan estas vistas:
+1.  VW_ReservasClientes_Findes
+-   Descripción: Esta vista permite visualizar las reservas de los clientes realizadas los fines de semana.
+-   Objetivo: Sirve para identificar y gestionar las reservas realizadas durante el fin de semana, lo cual puede ayudar en la planificación de recursos y personal necesario para esos días.
+-   Tablas que la componen: RESERVAS, CLIENTES.
+## Ejemplo
+```sql
+SELECT * FROM VW_ReservasClientes_Findes;
+-- Detalles de reservas del CLiente Sile Padula
+SELECT * FROM VW_ReservasClientes_Findes WHERE Nombre = 'Sile' AND Apellido = 'Padula';
+```
+2.  VW_PagosDetallados
+-   Descripción: Esta vista proporciona una visión detallada de los pagos realizados por los clientes, incluyendo la fecha de pago, la cantidad pagada, y la fecha de la reserva correspondiente.
+-   Objetivo: Permite llevar un control detallado de los pagos, facilitando la auditoría.
+-   Tablas que la componen: PAGOS, CLIENTES, RESERVAS.
+## Ejemplo
+```sql
+SELECT * FROM VW_PagosDetallados;
+-- Pagos detallados del 25 de julio del 2024
+SELECT * FROM VW_PagosDetallados
+WHERE DATE(FechaPago) = '2024-07-25';
+```
+3.  VW_ClientesFrecuentes_Pagos
+-   Descripción: Esta vista muestra a los clientes frecuentes que han realizado pagos por un monto total superior a 10,000.
+-   Objetivo: Identificar a los clientes más valiosos que contribuyen significativamente al ingreso del club, facilitando la creación de estrategias de fidelización.
+-   Tablas que la componen: CLIENTES, PAGOS, CATEGORIAS.
+## Ejemplo
+```sql
+SELECT * FROM VW_ClientesFrecuentes_Pagos;
+-- Clientes que pagaron mas de 20000
+SELECT * FROM VW_ClientesFrecuentes_Pagos
+WHERE Total > 20000;
+```
+4.  VW_ReservasHoy
+-   Descripción: Esta vista muestra todas las reservas realizadas para el día de la fecha, la hora de inicio, fin, el nombre del cliente y la descripción de la cancha.
+-   Objetivo: Facilita la gestión y el seguimiento de las reservas del día, permitiendo una organización eficiente de los recursos y personal.
+-   Tablas que la componen: RESERVAS, CLIENTES, HORARIOS, CANCHAS.
+## Ejemplo
+```sql
+SELECT * FROM VW_ReservasHoy;
+```
