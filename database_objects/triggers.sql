@@ -1,56 +1,57 @@
-USE Wifly;
+USE TUFUT;
 
-
-
--- Creación TRIGGERS
--- VALIDACIÓN DE CANTIDAD DE EQUIPOS: verifica que la cantidad de equipos esten disponibles cuando se realiza una venta.
-
+-- Trigger para comprobar la disponibilidad de una cancha antes de realizar una reserva.
 DELIMITER //
-
-CREATE TRIGGER verificar_cantidad_equipo
-BEFORE INSERT ON VENTAS
+CREATE TRIGGER before_insert_reservas
+BEFORE INSERT ON RESERVAS
 FOR EACH ROW
 BEGIN
-    DECLARE cantidad_disponible INT;
-
-    -- Obtener la cantidad disponible del equipo que se va a vender
-    SELECT cantidad INTO cantidad_disponible
-    FROM EQUIPOS
-    WHERE id_equipo = NEW.id_equipo;
-
-    -- Verificar si hay suficiente cantidad
-    IF cantidad_disponible < NEW.cantidad THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay suficiente cantidad en stock para el equipo seleccionado.';
+    DECLARE disponibilidad BOOLEAN;
+    
+    SET disponibilidad = DisponibilidadCancha(NEW.IdCancha, NEW.FechaReserva, NEW.IdHorario);
+    
+    IF disponibilidad = FALSE THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La cancha no esta disponible en esa fecha y hora';
     END IF;
 END //
-
 DELIMITER ;
 
--- VALIDACIÓN DE EMPLEADO-OPERACIÓN: permite verificar que el empleado y la operación existe antes de asignarla.
+-- Trigger para registrar en la tabla de auditoria las inserciones de pagos.
 DELIMITER //
 
-CREATE TRIGGER before_insert_assignment
-BEFORE INSERT ON ASIGNACIONES
+CREATE TRIGGER after_insert_pagos
+AFTER INSERT ON PAGOS
 FOR EACH ROW
 BEGIN
-    DECLARE employee_exists INT;
-    DECLARE operation_exists INT;
-    
-    SELECT COUNT(*) INTO employee_exists
-    FROM EMPLEADOS
-    WHERE id_empleado = NEW.id_empleado;
-    
-    SELECT COUNT(*) INTO operation_exists
-    FROM OPERACIONES
-    WHERE id_operacion = NEW.id_operacion;
-    
-    IF employee_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Empleado no existe';
+    INSERT INTO AuditoriaPagos (
+        IdPago, 
+        CantidadPagoNuevo, 
+        FechaPagoNuevo, 
+        IdCliente, 
+        Accion, 
+        FechaAccion
+    )
+    VALUES (
+        NEW.IdPago, 
+        NEW.CantidadPago, 
+        NEW.FechaPago, 
+        NEW.IdCliente, 
+        'Inserción de Pago', 
+        NOW()
+    );
+END //
+
+-- Trigger para evitar eliminar reservas con un dia o menos de anticipacion.
+ DELIMITER //
+
+CREATE TRIGGER before_delete_reservas_evitar_proximas_24h
+BEFORE DELETE ON RESERVAS
+FOR EACH ROW
+BEGIN
+    IF OLD.FechaReserva <= NOW() + INTERVAL 1 DAY THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'No se pueden eliminar reservas que esten dentro de las proximas 24 horas';
     END IF;
-    
-    IF operation_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Operación no existe';
-    END IF;
-END ; //
+END //
 
 DELIMITER ;
