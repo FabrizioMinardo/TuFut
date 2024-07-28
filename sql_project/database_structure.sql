@@ -128,3 +128,6 @@ CREATE TABLE AuditoriaPagos (
     FechaAccion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (IdAuditoria)
 );
+ALTER TABLE AuditoriaPagos
+COMMENT = 'Esta tabla guarda un historial de pagos realizados, incluyendo detalles la accion, la fecha y el cliente.';
+

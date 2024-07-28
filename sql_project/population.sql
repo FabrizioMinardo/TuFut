@@ -6,7 +6,7 @@ SET GLOBAL local_infile = true;
 INSERT INTO `CATEGORIAS`(`DescripcionCategoria`)
 VALUES ('Cliente nuevo'),('Cliente frecuente'),('Cliente inactivos'),('Cliente VIP'),('Cliente Empresa');
 
-LOAD    DATA LOCAL INFILE '/TuFut/sql_project/data_csv/CLIENTES.csv'
+LOAD    DATA LOCAL INFILE 'sql_project/data_csv/CLIENTES.csv'
         INTO TABLE  CLIENTES
             FIELDS TERMINATED   BY ','  ENCLOSED BY '"'
             LINES TERMINATED    BY '\n'		 
@@ -43,14 +43,14 @@ VALUES (1,'Juan Perez','Jefe')
 , (4,'Mara Lopez','Empleado')
 , (5,'Luis Sanchez','Empleado');
 
-LOAD    DATA LOCAL INFILE '/TuFut/sql_project/data_csv/PAGOS.csv'
+LOAD    DATA LOCAL INFILE 'sql_project/data_csv/PAGOS.csv'
         INTO TABLE  PAGOS
             FIELDS TERMINATED   BY ','  ENCLOSED BY '"'
             LINES TERMINATED    BY '\n'		 
             IGNORE 1 LINES
 		(FechaPago, CantidadPago, IdCliente);
 
-LOAD    DATA LOCAL INFILE '/TuFut/sql_project/data_csv/RESERVAS.csv'
+LOAD    DATA LOCAL INFILE 'sql_project/data_csv/RESERVAS.csv'
         INTO TABLE  RESERVAS 
             FIELDS TERMINATED   BY ','  ENCLOSED BY '"'
             LINES TERMINATED    BY '\n'		 
@@ -64,14 +64,14 @@ VALUES ('Pelotas de ftbol', 20)
 , ('Marcadores', 15)
 , ('Botellas de agua', 100);
 
-LOAD    DATA LOCAL INFILE '/TuFut/sql_project/data_csv/DETALLE_PAGOS.csv'
+LOAD    DATA LOCAL INFILE 'sql_project/data_csv/DETALLE_PAGOS.csv'
         INTO TABLE  DETALLE_PAGOS
             FIELDS TERMINATED   BY ','  ENCLOSED BY '"'
             LINES TERMINATED    BY '\n'		 
             IGNORE 1 LINES
 		(IdPago, Descripcion, Monto);
 
-LOAD    DATA LOCAL INFILE '/TuFut/sql_project/data_csv/RESERVAS_INSUMOS.csv'
+LOAD    DATA LOCAL INFILE 'sql_project/data_csv/RESERVAS_INSUMOS.csv'
         INTO TABLE  RESERVAS_INSUMOS
             FIELDS TERMINATED   BY ','  ENCLOSED BY '"'
             LINES TERMINATED    BY '\n'		 

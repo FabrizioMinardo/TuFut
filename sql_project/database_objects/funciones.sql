@@ -24,6 +24,7 @@ END //
 DELIMITER ;
 
 -- Funcion de categorizacion de clientes: Segun las veces que un cliente realizó reservas se puede saber la clase de categoria que tiene.
+DELIMITER //
 CREATE FUNCTION CategoriaCliente(IdCliente INT)
 RETURNS VARCHAR(20)
 READS SQL DATA
