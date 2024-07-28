@@ -147,3 +147,50 @@ Proporciona información detallada sobre un pago realizado por un cliente.
 VARCHAR(200) - Retorna una cadena concatenada con los detalles del pago.
 -   Utilidad:
 Permite obtener rápidamente información sobre los pagos realizados, útil para consultas, reportes financieros y para el seguimiento de transacciones.
+
+## Procedimientos almacenados:
+*SP_RegistrarReserva*
+
+-   Descripción:
+Inserta una nueva reserva en la base de datos.
+-   Objetivo:
+Registrar una nueva reserva para un cliente en una cancha específica, en una fecha y horario determinados, gestionada por un empleado.
+-   Parámetros de entrada:
+-   -   Id_Cliente INT: Identificador del cliente que realiza la reserva.
+-   -   Id_Cancha INT: Identificador de la cancha reservada.
+-   -   fecha DATE: Fecha de la reserva.
+-   -   Id_Horario INT: Identificador del horario de la reserva.
+-   -   Id_Empleado INT: Identificador del empleado que gestiona la reserva.
+-   Acciones:
+Inserta un nuevo registro en la tabla RESERVAS con los detalles proporcionados.
+-   Utilidad:
+Facilita la creación de nuevas reservas de manera controlada y sistemática, asegurando que toda la información relevante sea registrada adecuadamente.
+
+    *SP_ActualizarPago*
+-   Descripción:
+Actualiza la cantidad de un pago existente.
+-   Objetivo:
+Modificar la cantidad asociada a un pago específico.
+-   Parámetros de entrada:
+-   -   Id_Pago INT: Identificador del pago que se desea actualizar.
+-   -   NuevaCantidad INT: Nueva cantidad para el pago.
+-   Acciones:
+Actualiza el campo CantidadPago en la tabla PAGOS para el registro con IdPago igual al parametro Id_Pago.
+-   Utilidad:
+Permite corregir o actualizar la información de pagos ya registrados, asegurando la exactitud de los registros.
+
+    *SP_EliminarReserva*
+-   Descripción:
+Elimina una reserva y sus pagos asociados, verificando primero la categoría del cliente y si la reserva existe.
+-   Objetivo:
+Eliminar una reserva y todos los pagos relacionados, con una validación de la categoría del cliente para asegurarse de que los clientes nuevos no puedan eliminar reservas.
+-   Parámetros de entrada:
+-   -   Id_Reserva INT: Identificador de la reserva que se desea eliminar.
+-   Acciones:
+Verifica si la reserva existe y obtiene el IdCliente correspondiente.
+Si la reserva no existe, lanza un error.
+Obtiene la categoría del cliente usando la función CategoriaCliente.
+Si la categoría del cliente es "cliente nuevo", lanza un error.
+Si la categoría del cliente no es "cliente nuevo", elimina los detalles del pago, la reserva y los pagos asociados al cliente.
+-   Utilidad:
+Permite la eliminación controlada de reservas y sus pagos asociados, asegurando que solo ciertos tipos de clientes puedan realizar esta acción y manteniendo la integridad referencial de la base de datos.
