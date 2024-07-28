@@ -68,7 +68,7 @@ CREATE TABLE `PAGOS` (
 DROP TABLE IF EXISTS `RESERVAS`;
 CREATE TABLE `RESERVAS` (
   `IdReserva` int NOT NULL AUTO_INCREMENT,
-  `FechaReserva` datetime DEFAULT CURRENT_TIMESTAMP,
+  `FechaReserva` datetime NOT NULL,
   `IdCliente` int NOT NULL,
   `IdCancha` int NOT NULL,
   `IdHorario` int NOT NULL,
