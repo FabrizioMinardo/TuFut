@@ -269,3 +269,46 @@ WHERE Total > 20000;
 ```sql
 SELECT * FROM VW_ReservasHoy;
 ```
+## Triggers
+1.  before_insert_reservas
+-   Descripción:
+Este trigger se activa antes de insertar un nuevo registro en la tabla RESERVAS. Su función es comprobar si la cancha solicitada está disponible en la fecha y hora especificadas. Si la cancha no está disponible, el trigger impide la inserción y muestra un mensaje de error.
+-   Objetivo:
+Asegurar que no se realicen reservas en canchas que ya están ocupadas en la fecha y hora deseadas, evitando conflictos de reservas.
+-   Tablas que afecta:
+RESERVAS
+## Ejemplo
+```sql
+-- Insercion de nueva reversa con exito
+INSERT INTO RESERVAS (FechaReserva, IdCliente, IdCancha, IdHorario, IdEmpleado) VALUES ('2026-09-30 12:00:00', 1, 4, 4, 1);
+-- Insercion de nueva reserva con error por disponibilidad
+INSERT INTO RESERVAS (FechaReserva, IdCliente, IdCancha, IdHorario, IdEmpleado) VALUES ('2026-09-30 12:00:00', 1, 1 ,1, 1);
+```
+2.  after_insert_pagos
+-   Descripción:
+Este trigger se activa después de insertar un nuevo registro en la tabla PAGOS. Inserta automáticamente un registro en la tabla AuditoriaPagos para registrar los detalles del nuevo pago.
+-   Objetivo:
+Mantener un registro histórico de las inserciones de pagos, facilitando la auditoría y el seguimiento de las transacciones.
+-   Tablas que afecta:
+PAGOS, AuditoriaPagos
+## Ejemplo
+```sql
+-- Insercion de pago
+INSERT INTO PAGOS (IdPago, FechaPago, CantidadPago, IdCliente) VALUES (1012, '2024-08-01 10:00:00', 100.00, 1);
+-- Consulta de la tabla de auditoria
+SELECT * FROM AuditoriaPagos;
+```
+3.  before_delete_reservas_24h
+-   Descripción: Este trigger se activa antes de eliminar un registro en la tabla RESERVAS. Impide la eliminación de reservas que están programadas para dentro de las próximas 24 horas.
+-   Objetivo:
+Evitar la eliminación de reservas que están demasiado cerca en el tiempo, lo cual podría causar inconvenientes a los clientes que ya han hecho planes basados en esas reservas.
+-   Tablas que afecta:
+RESERVAS
+## Ejemplo
+```sql
+-- Ver las reservas proximas
+SELECT *
+FROM RESERVAS
+WHERE DATE(FechaReserva) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WEEK);
+-- Despues tratar de eiminar alguna de esas reservas con menos de 24 horas de anticipacion
+```

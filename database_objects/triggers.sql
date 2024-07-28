@@ -42,9 +42,9 @@ BEGIN
 END //
 
 -- Trigger para evitar eliminar reservas con un dia o menos de anticipacion.
- DELIMITER //
+DELIMITER //
 
-CREATE TRIGGER before_delete_reservas_evitar_proximas_24h
+CREATE TRIGGER before_delete_reservas_24h
 BEFORE DELETE ON RESERVAS
 FOR EACH ROW
 BEGIN
