@@ -53,7 +53,7 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 10. **Reservas_Insumos:**
 -   Esta tabla guarda la relación entre las reservas y los insumos utilizados en cada reserva.
 -   Atributos: IdReserva, IdInsumo.
-11. AuditoriaPagos
+11. **AuditoriaPagos**
 -   Esta tabla se utiliza para mantener un historial detallado de todas las acciones relacionadas con los pagos en el sistema, permitiendo una auditoría efectiva de las transacciones realizadas.
 -   Atributos: IdAuditoria, IdPago, CantidadPagoNuevo, FechaPagoNuevo, IdCliente, Accion, FechaAccion.
 # Resultados:
@@ -236,7 +236,7 @@ En el proyecto del sistema de reservas y pagos del club, se han diseñado varias
 -   Descripción: Esta vista permite visualizar las reservas de los clientes realizadas los fines de semana.
 -   Objetivo: Sirve para identificar y gestionar las reservas realizadas durante el fin de semana, lo cual puede ayudar en la planificación de recursos y personal necesario para esos días.
 -   Tablas que la componen: RESERVAS, CLIENTES.
-## Ejemplo
+#### Ejemplo
 ```sql
 SELECT * FROM VW_ReservasClientes_Findes;
 -- Detalles de reservas del CLiente Sile Padula
@@ -246,7 +246,7 @@ SELECT * FROM VW_ReservasClientes_Findes WHERE Nombre = 'Sile' AND Apellido = 'P
 -   Descripción: Esta vista proporciona una visión detallada de los pagos realizados por los clientes, incluyendo la fecha de pago, la cantidad pagada, y la fecha de la reserva correspondiente.
 -   Objetivo: Permite llevar un control detallado de los pagos, facilitando la auditoría.
 -   Tablas que la componen: PAGOS, CLIENTES, RESERVAS.
-## Ejemplo
+#### Ejemplo
 ```sql
 SELECT * FROM VW_PagosDetallados;
 -- Pagos detallados del 25 de julio del 2024
@@ -257,7 +257,7 @@ WHERE DATE(FechaPago) = '2024-07-25';
 -   Descripción: Esta vista muestra a los clientes frecuentes que han realizado pagos por un monto total superior a 10,000.
 -   Objetivo: Identificar a los clientes más valiosos que contribuyen significativamente al ingreso del club, facilitando la creación de estrategias de fidelización.
 -   Tablas que la componen: CLIENTES, PAGOS, CATEGORIAS.
-## Ejemplo
+#### Ejemplo
 ```sql
 SELECT * FROM VW_ClientesFrecuentes_Pagos;
 -- Clientes que pagaron mas de 20000
@@ -268,7 +268,7 @@ WHERE Total > 20000;
 -   Descripción: Esta vista muestra todas las reservas realizadas para el día de la fecha, la hora de inicio, fin, el nombre del cliente y la descripción de la cancha.
 -   Objetivo: Facilita la gestión y el seguimiento de las reservas del día, permitiendo una organización eficiente de los recursos y personal.
 -   Tablas que la componen: RESERVAS, CLIENTES, HORARIOS, CANCHAS.
-## Ejemplo
+#### Ejemplo
 ```sql
 SELECT * FROM VW_ReservasHoy;
 ```
@@ -280,7 +280,7 @@ Este trigger se activa antes de insertar un nuevo registro en la tabla RESERVAS.
 Asegurar que no se realicen reservas en canchas que ya están ocupadas en la fecha y hora deseadas, evitando conflictos de reservas.
 -   Tablas que afecta:
 RESERVAS
-## Ejemplo
+#### Ejemplo
 ```sql
 -- Insercion de nueva reversa con exito
 INSERT INTO RESERVAS (FechaReserva, IdCliente, IdCancha, IdHorario, IdEmpleado) VALUES ('2026-09-30 12:00:00', 1, 4, 4, 1);
@@ -294,7 +294,7 @@ Este trigger se activa después de insertar un nuevo registro en la tabla PAGOS.
 Mantener un registro histórico de las inserciones de pagos, facilitando la auditoría y el seguimiento de las transacciones.
 -   Tablas que afecta:
 PAGOS, AuditoriaPagos
-## Ejemplo
+#### Ejemplo
 ```sql
 -- Insercion de pago
 INSERT INTO PAGOS (IdPago, FechaPago, CantidadPago, IdCliente) VALUES (1012, '2024-08-01 10:00:00', 100.00, 1);
@@ -307,7 +307,7 @@ SELECT * FROM AuditoriaPagos;
 Evitar la eliminación de reservas que están demasiado cerca en el tiempo, lo cual podría causar inconvenientes a los clientes que ya han hecho planes basados en esas reservas.
 -   Tablas que afecta:
 RESERVAS
-## Ejemplo
+#### Ejemplo
 ```sql
 -- Ver las reservas proximas
 SELECT *
