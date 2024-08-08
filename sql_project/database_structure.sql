@@ -37,7 +37,7 @@ CREATE TABLE `CATEGORIAS` (
   `IdCategoria` int NOT NULL AUTO_INCREMENT,
   `DescripcionCategoria` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`IdCategoria`)
-) COMMENT='Esta tabla guarda las categorías de los clientes';
+) COMMENT='Esta tabla guarda las categorias de los clientes';
 
 -- Tabla de clientes
 DROP TABLE IF EXISTS `CLIENTES`;
