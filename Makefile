@@ -51,6 +51,10 @@ access-db:
 	@echo "Access to db-client"
 	docker exec -it $(SERVICE_NAME) mysql -u$(MYSQL_USER) -p$(PASSWORD) 
 
+backup-db:
+	@echo "Back up database by structure and data"
+# Dump MySQL database to a file
+docker exec -it $(service_name) mysqldump -u root -p$(PASSWORD) $(DATABASE) > ./back-up/$(DATABASE)-$/CURDATE).sql
 
 down:
 	@echo "Remove the Database"
