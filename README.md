@@ -21,49 +21,49 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 -   **Como control de versiones voy a utilizar GIT** para tener un seguimiento seguro de las implementaciones realizadas.
 - **Docker**: Para asegurar un entorno de desarrollo y producción estandarizado, facilitando la gestión de la base de datos y sus dependencias.
 
-## Tablas:
-1.  **Canchas:**
+## Tablas
+1.  **Canchas**
 -   En esta tabla se guarda el id de cada cancha y la descripcion, que en este caso es su ubicacion dentro del club.
 -   Atributos: IdCancha, DescripcionCancha, CostoHora.
-2.  **Clientes:** 
+2.  **Clientes** 
 -   Esta tabla almacena los datos de los clientes que han reservado alguna vez una cancha.
 -   Atributos: IdCliente, NombreCliente, ApellidoCliente, TelefonoCliente.
-3.  **Empleados;**
+3.  **Empleados**
 -   Esta tabla guarda los datos de los empleados.
 -   Atributos: IdEmpleado, NombreEmpleado, RolEmpleado.
-4.  **Pagos:**
+4.  **Pagos**
 -   Esta tabla guarda los pagos y su cantidad.
 -   Atributos: IdPago, FechaPago, CantidadPago, IdCliente.
-5.  **Reservas:**
+5.  **Reservas**
 -   Esta tabla guarda las reservas de las canchas indicando qué cancha, qué cliente, la hora de la reserva y el empleado que gestionó la reserva.
 -   Atributos: IdReserva, FechaReserva, IdCliente, IdCancha, IdHorario, IdEmpleado.
 -   Contenedores: Implementaré Docker para asegurar un entorno de desarrollo y producción estandarizado, facilitando la gestión de la base de datos y sus dependencias.
-6.  **Horarios:**
+6.  **Horarios**
 -   Esta tabla guarda los intervalos de tiempo disponibles para las reservas de las canchas.
 -   Atributos: IdHorario, HoraInicio, HoraFin.
-7.  **Insumos:**
+7.  **Insumos**
 -   Esta tabla guarda los insumos que pueden ser utilizados durante las reservas, como pelotas, redes, etc.
 -   Atributos: IdInsumo, DescripcionInsumo, Cantidad.
-8.  **Categorias:**
+8.  **Categorias**
 -   Esta tabla guarda los tipos de clientes según su frecuencia de reservas.
 -   Atributos: IdCategoria, DescripcionCategoria.
-9.  **Detalle_Pagos:**
+9.  **Detalle_Pagos**
 -   En esta tabla se guardan los detalles de los pagos, asociando cada pago con las reservas correspondientes.
 -   Atributos: IdDetallePago, IdPago, Descripcion, Monto.
-10. **Reservas_Insumos:**
+10. **Reservas_Insumos**
 -   Esta tabla guarda la relación entre las reservas y los insumos utilizados en cada reserva.
 -   Atributos: IdReserva, IdInsumo.
 11. **AuditoriaPagos**
 -   Esta tabla se utiliza para mantener un historial detallado de todas las acciones relacionadas con los pagos en el sistema, permitiendo una auditoría efectiva de las transacciones realizadas.
 -   Atributos: IdAuditoria, IdPago, CantidadPagoNuevo, FechaPagoNuevo, IdCliente, Accion, FechaAccion.
-# Resultados:
+# Resultados
 -   Las reservas serán registradas de manera correcta y precisa, reduciendo significativamente los errores de duplicación o falta de registro.
 -   El proceso de reserva será más ágil y eficiente, gracias a la automatización y optimización de los flujos de trabajo.
 -   La gestión centralizada y transparente de las reservas minimizará los conflictos y malentendidos con los clientes.
 -   Los pagos asociados a las reservas serán registrados y gestionados de manera correcta, asegurando un control adecuado y reduciendo la pérdida de ingresos.
 -   Tanto el personal administrativo como los clientes podrán acceder fácilmente a la información actualizada sobre reservas y pagos, mejorando la comunicación.
 
-## DER:
+## DER
 ```
 +--------------------+        +-----------------------+        +------------------+
 |      CLIENTES      |        |        RESERVAS       |        |      CANCHAS     |
@@ -315,7 +315,7 @@ WHERE DATE(FechaReserva) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WE
 -- Despues tratar de eiminar alguna de esas reservas con menos de 24 horas de anticipacion
 ```
 
-## Roles y permisos:
+## Roles y permisos
 Para gestionar el acceso y los permisos en la base de datos del club, creé y configuré diferentes roles y usuarios. A continuación se detalla la asignación de permisos y configuración de usuarios.
 
 ### Roles
