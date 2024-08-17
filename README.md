@@ -121,7 +121,7 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 | Monto            |
 +------------------+
 ```
-## Funciones:
+## Funciones
 Se elaboraron 3 funciones para la base de datos.
 1.  *DisponibilidadCancha*
 -   Descripción:
@@ -165,7 +165,7 @@ Permite obtener rápidamente información sobre los pagos realizados, útil para
 ``` sql 
 SELECT DetallePago(18) AS Detalles;
 ```
-## Procedimientos almacenados:
+## Procedimientos almacenados
 *SP_RegistrarReserva*
 
 -   Descripción:
@@ -208,7 +208,6 @@ Permite corregir o actualizar la información de pagos ya registrados, asegurand
 CALL SP_ActualizarPago(5, 150);
 ```
 
-
 *SP_EliminarReserva*
 -   Descripción:
 Elimina una reserva y sus pagos asociados, verificando primero la categoría del cliente y si la reserva existe.
@@ -230,7 +229,7 @@ Permite la eliminación controlada de reservas y sus pagos asociados, asegurando
 ```sql
 CALL SP_EliminarReserva(19);
 ```
-## Vistas:
+## Vistas
 En el proyecto del sistema de reservas y pagos del club, se han diseñado varias vistas para diferentes áreas y con distintos objetivos. A continuación, se detallan estas vistas:
 1.  VW_ReservasClientes_Findes
 -   Descripción: Esta vista permite visualizar las reservas de los clientes realizadas los fines de semana.
@@ -315,6 +314,36 @@ FROM RESERVAS
 WHERE DATE(FechaReserva) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WEEK);
 -- Despues tratar de eiminar alguna de esas reservas con menos de 24 horas de anticipacion
 ```
+
+## Roles y permisos:
+Para gestionar el acceso y los permisos en la base de datos del club, creé y configuré diferentes roles y usuarios. A continuación se detalla la asignación de permisos y configuración de usuarios.
+
+### Roles
+1.  Jefe
+-   **Descripción**: Rol con permisos completos en la base de datos.
+-   **Permisos**: Todos los privilegios en todas las tablas.
+
+2. Administración
+  - **Descripción:** Rol para el área de administración del club.
+  - **Permisos:**
+    - Lectura, inserción, actualización y eliminación en las tablas de reservas, clientes y horarios.
+    - Ejecución de procedimientos para actualizar pagos, eliminar y registrar reservas.
+    - Ejecución de funciones relacionadas con categorías de cliente y detalles de pagos.
+    - Lectura de vistas de clientes frecuentes y pagos detallados.
+
+3.  Contabilidad
+-  **Descripción:** Rol para el área de contabilidad.
+-  **Permisos:**
+    -   Lectura, inserción, actualización y eliminación en las tablas de pagos y detalles de pagos.
+    -   Lectura de la tabla de auditoría de pagos.
+    -   Lectura de vistas de clientes frecuentes y pagos detallados.
+
+
+
+
+
+
+
 
 ## COMO CORRER MI CODIGO
 ```make
