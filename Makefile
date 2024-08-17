@@ -53,8 +53,8 @@ access-db:
 
 backup-db:
 	@echo "Back up database by structure and data"
-# Dump MySQL database to a file
-docker exec -it $(service_name) mysqldump -u root -p$(PASSWORD) $(DATABASE) > ./back-up/$(DATABASE)-$/CURDATE).sql
+	# Dump MySQL database to a file
+	docker exec -it $(SERVICE_NAME) mysqldump -u root -p$(PASSWORD) $(DATABASE) > ./back-up/$(DATABASE)-$(shell date +%Y%m%d).sql
 
 down:
 	@echo "Remove the Database"
