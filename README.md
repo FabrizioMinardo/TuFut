@@ -54,8 +54,8 @@ Todo esto provoca la insatisfacción por parte de los clientes además de perdid
 -   Esta tabla guarda la relación entre las reservas y los insumos utilizados en cada reserva.
 -   Atributos: IdReserva, IdInsumo.
 11. **AuditoriaPagos**
--   Esta tabla se utiliza para mantener un historial detallado de todas las acciones relacionadas con los pagos en el sistema, permitiendo una auditoría efectiva de las transacciones realizadas.
--   Atributos: IdAuditoria, IdPago, CantidadPagoNuevo, FechaPagoNuevo, IdCliente, Accion, FechaAccion.
+- Esta tabla se utiliza para mantener un historial detallado de todas las acciones relacionadas con los pagos en el sistema, permitiendo una auditoría efectiva de las transacciones realizadas.
+- Atributos: IdAuditoria, IdPago, CantidadPagoNuevo, FechaPagoNuevo, IdCliente, Accion, FechaAccion.
 # Resultados
 -   Las reservas serán registradas de manera correcta y precisa, reduciendo significativamente los errores de duplicación o falta de registro.
 -   El proceso de reserva será más ágil y eficiente, gracias a la automatización y optimización de los flujos de trabajo.
