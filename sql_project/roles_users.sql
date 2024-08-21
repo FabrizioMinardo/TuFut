@@ -24,6 +24,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TUFUT.PAGOS TO 'Contabilidad';
 GRANT SELECT, INSERT, UPDATE, DELETE ON TUFUT.DETALLE_PAGOS TO 'Contabilidad';
 GRANT SELECT ON TUFUT.AuditoriaPagos TO 'Contabilidad';
 
+--Actualizo los privilegios
+FLUSH PRIVILEGES;
+
 -- Otorgo el permiso de que administracion pueda ejecutar los procedimientos de actualizacion de pagos, eliminar una reserva y registrar una reserva
 GRANT EXECUTE ON PROCEDURE TUFUT.SP_ActualizarPago TO 'Administracion';
 GRANT EXECUTE ON PROCEDURE TUFUT.SP_EliminarReserva TO 'Administracion';

@@ -338,6 +338,12 @@ Para gestionar el acceso y los permisos en la base de datos del club, creé y co
     -   Lectura de la tabla de auditoría de pagos.
     -   Lectura de vistas de clientes frecuentes y pagos detallados.
 
+    ##  Ver permisos de usuarios y sus roles
+```sql
+SHOW GRANTS FOR 'carlos'@'localhost';
+SHOW GRANTS FOR 'ana'@'localhost';
+```
+
 ##  BACKUP
   backup-db:
 - Descripción: Este script se encarga de realizar un respaldo de la base de datos, incluyendo tanto la estructura como los datos. Utiliza Docker para ejecutar el comando mysqldump dentro del contenedor donde se está ejecutando MySQL.
@@ -352,19 +358,6 @@ Se genera un archivo SQL en la carpeta back-up/ con el nombre TUFUT-(dia)-(mes)-
 make backup-db
 ```
 ## COMO CORRER LA BASE DE DATOS COMPLETA
-<<<<<<< HEAD
-=======
-```make
-make
-```
-
-
-
-
-
-
-## COMO CORRER MI CODIGO
->>>>>>> 2cc8c82 (Agregado roles y usuarios)
 ```make
 make
 ```
