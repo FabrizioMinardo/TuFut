@@ -353,7 +353,7 @@ SHOW GRANTS FOR 'Contabilidad';
 - Archivo de salida: El respaldo se guarda en el directorio back-up/ con el formato TUFUT-<dia>-<mes>-<año>_<hora>-<minuto>.sql.
 - Resultado esperado:
 Se genera un archivo SQL en la carpeta back-up/ con el nombre TUFUT-(dia)-(mes)-(año)_(hora)-(minuto).sql, que contiene el respaldo completo de la base de datos TUFUT.
-##  Ejemplo
+###  Ejemplo
 ```make
 make backup-db
 ```
