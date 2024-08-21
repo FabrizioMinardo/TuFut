@@ -352,6 +352,19 @@ Se genera un archivo SQL en la carpeta back-up/ con el nombre TUFUT-(dia)-(mes)-
 make backup-db
 ```
 ## COMO CORRER LA BASE DE DATOS COMPLETA
+<<<<<<< HEAD
+=======
+```make
+make
+```
+
+
+
+
+
+
+## COMO CORRER MI CODIGO
+>>>>>>> 2cc8c82 (Agregado roles y usuarios)
 ```make
 make
 ```
