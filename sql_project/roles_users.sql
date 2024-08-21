@@ -1,10 +1,13 @@
 -- Crear rol para el jefe
+DROP ROLE IF EXISTS 'Jefe';
 CREATE ROLE 'Jefe';
 
 -- Crear rol para el area de administracion del club
+DROP ROLE IF EXISTS 'Administracion';
 CREATE ROLE 'Administracion';
 
 -- Crear rol para el area de contabilidad
+DROP ROLE IF EXISTS 'Contabilidad';
 CREATE ROLE 'Contabilidad';
 
 -- Otorgo todos los permisos de todas las tablas al rol de jefe

@@ -18,7 +18,7 @@ FILES=vistas funciones stored_procedures triggers
 
 .PHONY: all up create-roles-users objects test-db access-db down
 
-all: info up create-roles-users objects
+all: info up objects create-roles-users
 
 info:
 	@echo "This is a project for $(DATABASE)"
