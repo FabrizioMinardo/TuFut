@@ -320,7 +320,7 @@ Para gestionar el acceso y los permisos en la base de datos del club, creé y co
 
 ### Roles
 1.  Jefe
--   **Descripción**: Rol con permisos completos en la base de datos.
+-   **Descripción**: Rol con permisos totales en la base de datos.
 -   **Permisos**: Todos los privilegios en todas las tablas.
 
 2. Administración
@@ -338,10 +338,10 @@ Para gestionar el acceso y los permisos en la base de datos del club, creé y co
     -   Lectura de la tabla de auditoría de pagos.
     -   Lectura de vistas de clientes frecuentes y pagos detallados.
 
-    ##  Ver permisos de usuarios y sus roles
+    ##  Ver permisos de los roles
 ```sql
-SHOW GRANTS FOR 'carlos'@'localhost';
-SHOW GRANTS FOR 'ana'@'localhost';
+SHOW GRANTS FOR 'Administracion';
+SHOW GRANTS FOR 'Contabilidad';
 ```
 
 ##  BACKUP
