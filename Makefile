@@ -16,9 +16,9 @@ DATABASE_POPULATION=./sql_project/population.sql
 FILES=vistas funciones stored_procedures triggers
 
 
-.PHONY: all up objects test-db access-db down
+.PHONY: all up create-roles-users objects test-db access-db down
 
-all: info up objects
+all: info up create-roles-users objects
 
 info:
 	@echo "This is a project for $(DATABASE)"
@@ -50,6 +50,10 @@ test-db:
 access-db:
 	@echo "Access to db-client"
 	docker exec -it $(SERVICE_NAME) mysql -u$(MYSQL_USER) -p$(PASSWORD) 
+
+create-roles-users:
+	@echo "Creating roles and users in the database"
+	docker exec -it $(SERVICE_NAME) mysql -u$(MYSQL_USER) -p$(PASSWORD) -e "source ./sql_project/roles_users.sql"
 
 backup-db:
 	@echo "Back up database by structure and data"

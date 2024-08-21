@@ -338,14 +338,20 @@ Para gestionar el acceso y los permisos en la base de datos del club, creé y co
     -   Lectura de la tabla de auditoría de pagos.
     -   Lectura de vistas de clientes frecuentes y pagos detallados.
 
-
-
-
-
-
-
-
-## COMO CORRER MI CODIGO
+##  BACKUP
+  backup-db:
+- Descripción: Este script se encarga de realizar un respaldo de la base de datos, incluyendo tanto la estructura como los datos. Utiliza Docker para ejecutar el comando mysqldump dentro del contenedor donde se está ejecutando MySQL.
+- Objetivo: Asegurar que se mantenga un respaldo periódico de la base de datos para evitar la pérdida de información en caso de fallos o errores. El respaldo se guarda en un archivo .sql cuyo nombre incluye la fecha y hora en que se generó para facilitar su identificación.
+- Ubicación: Este script se encuentra en el archivo Makefile del proyecto, en la sección backup-db.
+- Herramientas utilizadas: Docker, mysqldump
+- Archivo de salida: El respaldo se guarda en el directorio back-up/ con el formato TUFUT-<dia>-<mes>-<año>_<hora>-<minuto>.sql.
+- Resultado esperado:
+Se genera un archivo SQL en la carpeta back-up/ con el nombre TUFUT-(dia)-(mes)-(año)_(hora)-(minuto).sql, que contiene el respaldo completo de la base de datos TUFUT.
+##  Ejemplo
+```make
+make backup-db
+```
+## COMO CORRER LA BASE DE DATOS COMPLETA
 ```make
 make
 ```
