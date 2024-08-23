@@ -229,6 +229,29 @@ Permite la eliminación controlada de reservas y sus pagos asociados, asegurando
 ```sql
 CALL SP_EliminarReserva(19);
 ```
+*SP_ActualizarPagoAuditoria*
+- Descripción: Actualiza la cantidad de un pago en la tabla PAGOS y registra la acción en la tabla de auditoría AuditoriaPagos.
+
+- Objetivo: Garantiza que cualquier actualización de un pago sea registrada en la auditoría, permitiendo un seguimiento detallado de los cambios.
+- Parámetros de entrada:
+- - Id_Pago INT: Identificador del pago que se desea actualizar.
+- - NuevaCantidad INT: Nueva cantidad para el pago.
+
+- Acciones:
+
+Inicia una transacción.
+Actualiza el campo CantidadPago en la tabla PAGOS segun el Id_Pago.
+Inserta un nuevo registro en la tabla AuditoriaPagos, con la actualizacion de la nueva cantidad y la fecha del pago.
+Si ocurre algún error durante la ejecución, la transacción se revierte utilizando un rollback.
+Si no se produce ningún error, la transacción se confirma.
+- Utilidad: Este procedimiento asegura que cada modificación en los pagos se registre en la tabla de auditoría, lo que facilita el control y la transparencia en la gestión de pagos.
+
+####  Ejemplo
+
+```sql
+CALL SP_ActualizarPagoAuditoria(15, 25000);
+```
+
 ## Vistas
 En el proyecto del sistema de reservas y pagos del club, se han diseñado varias vistas para diferentes áreas y con distintos objetivos. A continuación, se detallan estas vistas:
 1.  VW_ReservasClientes_Findes

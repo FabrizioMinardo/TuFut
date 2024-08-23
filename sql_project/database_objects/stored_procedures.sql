@@ -76,3 +76,37 @@ END //
 
 DELIMITER ;
 
+-- Procedimiento almacenado para actualizar la cantidad de un pago en la tabla de auditoria.
+DELIMITER //
+
+CREATE PROCEDURE SP_ActualizarPagoAuditoria(
+    IN Id_Pago INT,
+    IN NuevaCantidad INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Si se produce un error se revierte la transacción
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Se ctualiza el pago en la tabla PAGOS
+    UPDATE PAGOS
+    SET CantidadPago = NuevaCantidad
+    WHERE IdPago = Id_Pago;
+
+    -- Se registra la acción en la tabla de Auditoria
+    INSERT INTO AuditoriaPagos (IdPago, CantidadPagoNuevo, FechaPagoNuevo, IdCliente, Accion)
+    SELECT IdPago, NuevaCantidad, FechaPago, IdCliente, 'Actualizacion de Pago'
+    FROM PAGOS
+    WHERE IdPago = Id_Pago;
+
+    -- Si no hay errores se realiza la transaccion
+    COMMIT;
+
+END //
+
+DELIMITER ;
+
