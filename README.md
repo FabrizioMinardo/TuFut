@@ -317,7 +317,6 @@ WHERE DATE(FechaReserva) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WE
 
 ## Roles y permisos
 Para gestionar el acceso y los permisos en la base de datos del club, creé y configuré diferentes roles y usuarios. A continuación se detalla la asignación de permisos y configuración de usuarios.
-
 ### Roles
 1.  Jefe
 -   **Descripción**: Rol con permisos totales en la base de datos.
